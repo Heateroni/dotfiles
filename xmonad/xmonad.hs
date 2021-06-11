@@ -30,9 +30,9 @@ myFocusedBorderColor = "#a134eb"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modm,		    xK_b     ), spawn "google-chrome-stable")
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
+    , ((modm .|. shiftMask, xK_Return), spawn "dmenu_run")
+    , ((modm,               xK_p     ), spawn "pcmanfm")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     , ((modm .|. shiftMask, xK_c     ), kill)
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -42,7 +42,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_j     ), windows W.focusDown)
     , ((modm,               xK_k     ), windows W.focusUp  )
     , ((modm,               xK_m     ), windows W.focusMaster  )
-    , ((modm,               xK_Return), windows W.swapMaster)
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
     , ((modm,               xK_h     ), sendMessage Shrink)
@@ -52,7 +51,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 
@@ -120,3 +118,4 @@ defaults = def {
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
+	      }
