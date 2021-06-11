@@ -34,7 +34,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_Return), spawn "dmenu_run")
     , ((modm,               xK_p     ), spawn "pcmanfm")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm,               xK_c     ), kill)
     , ((modm,               xK_space ), sendMessage NextLayout)
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     , ((modm,               xK_n     ), refresh)
