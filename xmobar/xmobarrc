@@ -1,0 +1,34 @@
+Config { font = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"  ]
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "#282c34"
+       , fgColor = "#828282"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ 
+
+		    -- Time and date
+		       Run Date "%b %d %Y - (%H:%M) " "date" 50
+		    -- CPU usage in percent
+		     , Run Cpu ["-L","3","-H","50"] 10
+		    -- Memory Numbers
+		     , Run Memory ["-t","Mem: <usedratio>%"] 10
+		    -- Disk space
+		     , Run DiskU [("/","hdd: <free> free")] [] 60
+		    -- Script
+		     , Run Com "uname" ["-r"] "" 3600
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " <fc=#5a6ae6>%uname%</fc> | <fc=#67d4e0>%cpu%</fc> | } | <fc=#67e09d>%date%</fc> | { | <fc=#e0d067>%disku%</fc> | <fc=#e08567> %memory%</fc> "
+
