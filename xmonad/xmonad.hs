@@ -6,6 +6,7 @@ import System.Exit
 import XMonad.Layout.Spacing
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
+import XMonad.Layout.ShowWName
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import qualified XMonad.StackSet as W
@@ -32,6 +33,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
     , ((modm .|. shiftMask, xK_Return), spawn "dmenu_run")
+    , ((modm,		    xK_b     ), spawn "firefox")
     , ((modm,               xK_p     ), spawn "pcmanfm")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     , ((modm,               xK_c     ), kill)
@@ -71,34 +73,36 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
     ]
+myShowWNameTheme :: SWNConfig
+myShowWNameTheme = def
+    { swn_font              = "xft:Ubuntu:bold:size=60"
+    , swn_fade              = 1.0
+    , swn_bgcolor           = "#1c1f24"
+    , swn_color             = "#ffffff"
+    }
+
 
 myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full )
   where
-     tiled   = spacing 8 $  Tall nmaster delta ratio
+     tiled   = spacing 12 $  Tall nmaster delta ratio
      nmaster = 1
      ratio   = 1/2
      delta   = 3/100
 
-myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
 
 myEventHook = mempty
 
 myLogHook = return ()
 
 myStartupHook = do
-	spawnOnce "nitrogen --restore"
-	spawnOnce "picom --experimental-backends"
-	spawnOnce "sh monitors.sh"
+  spawnOnce "nitrogen --restore"
+  spawnOnce "picom --experimental-backends"
+  spawnOnce "sh monitors.sh"
 
 
 main = do
-  xmproc <- spawnPipe "xmobar -x 0 /home/heat/.config/xmobar/xmobarrc"
-  xmprov <- spawnPipe "xmobar -x 1 /home/heat/.config/xmobar/xmobarrc"
-  xmonad $ docks defaults 
+  xmproc <- spawnPipe "xmobar /home/heat/.config/xmobar/xmobarrc"
+  xmonad $ docks defaults
 
 defaults = def {
         terminal           = myTerminal,
@@ -113,8 +117,7 @@ defaults = def {
         keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        layoutHook         = showWName' myShowWNameTheme  $ myLayout,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
