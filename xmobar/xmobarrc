@@ -22,7 +22,7 @@ Config { font = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true
 		    -- CPU usage in percent
 		     , Run Cpu ["-L","3","-H","50"] 10
 		    -- Memory Numbers
-		     , Run Memory ["-t","Mem: <usedratio>%"] 10
+		     , Run Memory ["-t","Mem: <used>M"] 10
 		    -- Disk space
 		     , Run DiskU [("/","hdd: <free> free")] [] 60
 		    -- Script
